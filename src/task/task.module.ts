@@ -1,7 +1,11 @@
-import { Module } from '@nestjs/common'
+import { forwardRef,Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 
+import { UserModule } from '../user/user.module'
+
 import { Task, TaskSchema } from './schemas/task.schema'
+import { TaskResolver } from './task.resolver'
+import { TaskService } from './task.service'
 
 @Module({
     imports: [
@@ -11,6 +15,11 @@ import { Task, TaskSchema } from './schemas/task.schema'
                 schema: TaskSchema,
             },
         ]),
+        forwardRef(() => UserModule),
+    ],
+    providers: [
+        TaskService,
+        TaskResolver,
     ],
 })
 export class TaskModule {}
