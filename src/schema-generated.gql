@@ -16,6 +16,26 @@ type User {
   tasks: [Task!]
 }
 
+type Token {
+  token: String!
+}
+
 type Query {
   tasks: [Task!]!
+}
+
+type Mutation {
+  signUp(input: SignUpInput!): User!
+  login(input: LoginInput!): Token!
+}
+
+input SignUpInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }

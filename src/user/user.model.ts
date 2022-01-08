@@ -16,3 +16,10 @@ export class User {
     @Field(() => [Task], { nullable: true })
     tasks?: Task[]
 }
+
+@ObjectType()
+export class Token {
+    @Field()
+    token: string
+}
+
