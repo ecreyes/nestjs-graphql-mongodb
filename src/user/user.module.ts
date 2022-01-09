@@ -1,7 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 
-import { SharedModule } from '../shared/shared.module'
 import { TaskModule } from '../task/task.module'
 
 import { User, UserSchema } from './schemas/user.schema'
@@ -17,13 +16,13 @@ import { UserService } from './user.service'
             },
         ]),
         forwardRef(() => TaskModule),
-        SharedModule,
     ],
     providers: [
         UserService,
         UserResolver,
     ],
     exports: [
+        MongooseModule,
         UserService,
     ],
 })
