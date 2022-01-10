@@ -21,6 +21,15 @@ export class TaskService {
         }catch(error) {
             throw error
         }
+    }
 
+    public async findTaskById(id:string): Promise<Task> {
+        try {
+            const task = await this.taskModel.findById(id)
+
+            return task
+        }catch(error) {
+            throw error
+        }
     }
 }

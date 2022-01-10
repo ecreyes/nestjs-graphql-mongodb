@@ -12,6 +12,7 @@ import { UserService } from '../user/user.service'
 import { CreateTaskInput } from './task.input'
 import { Task } from './task.model'
 import { TaskService } from './task.service'
+import { TaskOwnerGuard } from './task-owner.guard'
 
 @Resolver(() => Task)
 export class TaskResolver {
@@ -19,9 +20,19 @@ export class TaskResolver {
 
     @Query(() => [Task])
     @UseGuards(GqlAuthGuard)
-    async tasks(@CurrentUser() user: ICurrentUser) {
+    async tasks(@CurrentUser() user: ICurrentUser): Promise<Task[]> {
       try {
         return await this.taskService.findAll(user.userId)
+      }catch(error) {
+        throw error
+      }
+    }
+
+    @Query(() => Task)
+    @UseGuards(GqlAuthGuard,TaskOwnerGuard)
+    async task(@Args('id') id:string) {
+      try {
+        return await this.taskService.findTaskById(id)
       }catch(error) {
         throw error
       }
