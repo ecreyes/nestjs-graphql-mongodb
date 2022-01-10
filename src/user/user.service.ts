@@ -20,4 +20,14 @@ export class UserService {
     async findAndUpdate(id, tasks): Promise<User> {
         return this.userModel.findOneAndUpdate({ _id: id },{ tasks }, { new: true })
     }
+
+    async getUsersById(userIds: readonly string[]): Promise<User[]> {
+        try{
+            const users = await this.userModel.find({ _id: { $in: userIds } })
+
+            return userIds.map(userId => users.find(user => user.id === userId))
+        }catch(error) {
+            throw error
+        }
+    }
 }
