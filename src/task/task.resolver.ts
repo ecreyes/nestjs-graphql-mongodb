@@ -19,7 +19,11 @@ export class TaskResolver {
     @Query(() => [Task])
     @UseGuards(GqlAuthGuard)
     async tasks(@CurrentUser() user: ICurrentUser) {
-      return this.taskService.findAll(user.email)
+      try {
+        return await this.taskService.findAll(user.userId)
+      }catch(error) {
+        throw error
+      }
     }
 
     @ResolveField()

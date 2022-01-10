@@ -8,8 +8,8 @@ import { Task } from './task.model'
 export class TaskService {
     constructor(@InjectModel(Task) private readonly taskModel: ReturnModelType<typeof Task>) {}
 
-    public async findAll(email: string): Promise<Task[]> {
-        return this.taskModel.find({ email })
+    public async findAll(id: string): Promise<Task[]> {
+        return this.taskModel.find({ user: id })
     }
 
     public async createTask(name: string,completed:boolean,user:string): Promise<Task> {
