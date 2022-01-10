@@ -1,4 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, HideField, ID, ObjectType } from '@nestjs/graphql'
+import { prop, Ref } from '@typegoose/typegoose'
 
 import { Task } from '../task/task.model'
 
@@ -8,11 +9,18 @@ export class User {
     id: number
 
     @Field()
+    @prop()
     name: string
 
     @Field()
+    @prop({ unique: true })
     email: string
 
+    @HideField()
+    @prop({ required: true })
+    password: string
+
     @Field(() => [Task], { nullable: true })
-    tasks?: Task[]
+    @prop({ ref: () => Task })
+    tasks?: Ref<Task[]>
 }

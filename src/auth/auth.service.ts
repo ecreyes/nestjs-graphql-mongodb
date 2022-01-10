@@ -1,17 +1,17 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { InjectModel } from '@nestjs/mongoose'
+import { ReturnModelType } from '@typegoose/typegoose'
 import * as bycriptjs from 'bcryptjs'
-import { Model } from 'mongoose'
+import { InjectModel } from 'nestjs-typegoose'
 
-import { User, UserDocument } from '../user/schemas/user.schema'
+import { User } from '../user/user.model'
 
 import { LoginInput, SignUpInput } from './auth.input'
 import { Token } from './token.model'
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>, private jwtService: JwtService) {}
+    constructor(@InjectModel(User) private readonly userModel: ReturnModelType<typeof User>, private jwtService: JwtService) {}
 
     public async save(input: SignUpInput): Promise<User> {
         try {

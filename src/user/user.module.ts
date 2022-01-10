@@ -1,20 +1,15 @@
 import { forwardRef, Module } from '@nestjs/common'
-import { MongooseModule } from '@nestjs/mongoose'
+import { TypegooseModule } from 'nestjs-typegoose'
 
 import { TaskModule } from '../task/task.module'
 
-import { User, UserSchema } from './schemas/user.schema'
+import { User } from './user.model'
 import { UserResolver } from './user.resolver'
 import { UserService } from './user.service'
 
 @Module({
     imports: [
-        MongooseModule.forFeature([
-            {
-                name: User.name,
-                schema: UserSchema,
-            },
-        ]),
+        TypegooseModule.forFeature([User]),
         forwardRef(() => TaskModule),
     ],
     providers: [
@@ -22,7 +17,7 @@ import { UserService } from './user.service'
         UserResolver,
     ],
     exports: [
-        MongooseModule,
+        TypegooseModule,
         UserService,
     ],
 })

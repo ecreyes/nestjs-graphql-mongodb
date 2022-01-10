@@ -1,20 +1,15 @@
 import { forwardRef,Module } from '@nestjs/common'
-import { MongooseModule } from '@nestjs/mongoose'
+import { TypegooseModule } from 'nestjs-typegoose'
 
 import { UserModule } from '../user/user.module'
 
-import { Task, TaskSchema } from './schemas/task.schema'
+import { Task } from './task.model'
 import { TaskResolver } from './task.resolver'
 import { TaskService } from './task.service'
 
 @Module({
     imports: [
-        MongooseModule.forFeature([
-            {
-                name: Task.name,
-                schema: TaskSchema,
-            },
-        ]),
+        TypegooseModule.forFeature([Task]),
         forwardRef(() => UserModule),
     ],
     providers: [
