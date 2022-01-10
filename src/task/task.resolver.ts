@@ -9,7 +9,7 @@ import { ICurrentUser } from '../user/current-user.interface'
 import { User } from '../user/user.model'
 import { UserService } from '../user/user.service'
 
-import { CreateTaskInput } from './task.input'
+import { CreateTaskInput, UpdateTaskInput } from './task.input'
 import { Task } from './task.model'
 import { TaskService } from './task.service'
 import { TaskOwnerGuard } from './task-owner.guard'
@@ -58,6 +58,16 @@ export class TaskResolver {
 
         return task
       }catch(error) {
+        throw error
+      }
+    }
+
+    @Mutation(()=> Task)
+    @UseGuards(GqlAuthGuard)
+    async updateTask(@Args('id') id:string, @Args('input') input: UpdateTaskInput ) {
+      try{
+        return await this.taskService.updateTask(id,input)
+      }catch(error){
         throw error
       }
     }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
+import { UpdateTaskInput } from './task.input'
 
 import { Task } from './task.model'
 
@@ -29,6 +30,15 @@ export class TaskService {
 
             return task
         }catch(error) {
+            throw error
+        }
+    }
+
+    public async updateTask(id: string, input: UpdateTaskInput): Promise<Task> {
+        try {
+            const task = await this.taskModel.findByIdAndUpdate(id, { ...input } , { new: true })
+            return task
+        }catch(error){
             throw error
         }
     }

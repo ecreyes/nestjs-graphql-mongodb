@@ -8,3 +8,12 @@ export class CreateTaskInput {
     @Field()
     completed: boolean
 }
+
+@InputType()
+export class UpdateTaskInput {
+    @Field({ nullable: true })
+    name?: string
+
+    @Field({ nullable: true })
+    completed?: boolean
+}

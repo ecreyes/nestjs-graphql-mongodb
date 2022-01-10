@@ -28,6 +28,7 @@ type Query {
 
 type Mutation {
   createTask(input: CreateTaskInput!): Task!
+  updateTask(input: UpdateTaskInput!, id: String!): Task!
   signUp(input: SignUpInput!): User!
   login(input: LoginInput!): Token!
 }
@@ -35,6 +36,11 @@ type Mutation {
 input CreateTaskInput {
   name: String!
   completed: Boolean!
+}
+
+input UpdateTaskInput {
+  name: String
+  completed: Boolean
 }
 
 input SignUpInput {
