@@ -30,7 +30,6 @@ import { AppService } from './app.service'
       useFactory: (userService: UserService) => ({
         autoSchemaFile: join(process.cwd(), 'src/schema-generated.gql'),
         context: () => ({
-          randomValue: Math.random(),
           usersLoader: batchUsers(userService),
         }),
       }),
