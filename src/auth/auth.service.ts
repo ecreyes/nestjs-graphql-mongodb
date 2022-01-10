@@ -42,7 +42,8 @@ export class AuthService {
 
             if(!isValidPassword) throw new BadRequestException('incorrect password')
 
-            const token = await this.jwtService.signAsync({ email })
+            const payload = { email: user.email, sub: user.id }
+            const token = await this.jwtService.signAsync(payload)
 
             return { token }
         }catch(error) {
