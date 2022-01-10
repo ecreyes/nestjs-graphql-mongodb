@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common'
 import { TypegooseModule } from 'nestjs-typegoose'
+import { TaskService } from '../task/task.service'
 
 import { TaskModule } from '../task/task.module'
 
