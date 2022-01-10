@@ -22,5 +22,5 @@ export class User {
 
     @Field(() => [Task], { nullable: true })
     @prop({ ref: () => Task })
-    tasks?: Ref<Task[]>
+    tasks?: Ref<Task>[]
 }

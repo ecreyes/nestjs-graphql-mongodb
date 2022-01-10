@@ -23,25 +23,26 @@ export class TaskResolver {
     }
 
     @ResolveField()
-    async user(@Parent() user: User) {
-      const { id } = user
+    async user(@Parent() task: Task) {
+      const { user } = task
 
-      return this.userService.findById(id)
+      return await this.userService.findById(user.toString())
     }
 
-    /*
     @Mutation(() => Task)
     @UseGuards(GqlAuthGuard)
     async createTask(@CurrentUser() currentUser: ICurrentUser, @Args('input') input: CreateTaskInput): Promise<Task> {
       try {
         const { name, completed } = input
-        const user = await this.userService.findByEmail(currentUser.email)
-        const task = await this.taskService.createTask(name,completed,currentUser.userId)
+        const user: User = await this.userService.findByEmail(currentUser.email)
+        const task: Task = await this.taskService.createTask(name,completed,currentUser.userId)
 
-        user.tasks.push(task.id)
+        await this.userService.findAndUpdate(currentUser.userId, [...user.tasks, task])
+
+        return task
       }catch(error) {
         throw error
       }
     }
-    */
+
 }
