@@ -29,6 +29,7 @@ type Query {
 type Mutation {
   createTask(input: CreateTaskInput!): Task!
   updateTask(input: UpdateTaskInput!, id: String!): Task!
+  deleteTask(id: String!): Task!
   signUp(input: SignUpInput!): User!
   login(input: LoginInput!): Token!
 }

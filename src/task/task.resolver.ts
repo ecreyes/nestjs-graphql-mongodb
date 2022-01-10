@@ -63,10 +63,22 @@ export class TaskResolver {
     }
 
     @Mutation(()=> Task)
-    @UseGuards(GqlAuthGuard)
-    async updateTask(@Args('id') id:string, @Args('input') input: UpdateTaskInput ) {
+    @UseGuards(GqlAuthGuard,TaskOwnerGuard)
+    async updateTask(@Args('id') id:string, @Args('input') input: UpdateTaskInput ): Promise<Task> {
       try{
         return await this.taskService.updateTask(id,input)
+      }catch(error){
+        throw error
+      }
+    }
+
+    @Mutation(()=> Task)
+    @UseGuards(GqlAuthGuard,TaskOwnerGuard)
+    async deleteTask(@CurrentUser() currentUser: ICurrentUser, @Args('id') id:string): Promise<Task> {
+      try {
+        const task = await this.taskService.deleteTask(id)
+        await this.userService.deleteTask(currentUser.userId, task.id.toString())
+        return task
       }catch(error){
         throw error
       }

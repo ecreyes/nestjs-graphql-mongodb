@@ -30,4 +30,12 @@ export class UserService {
             throw error
         }
     }
+
+    async deleteTask(userId: string, taskId: string): Promise<void> {
+        try{
+            await this.userModel.updateOne({ _id: userId}, { $pull : { tasks : taskId} })
+        }catch(error){
+            throw error
+        }
+    }
 }
